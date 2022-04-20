@@ -1,14 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
     [SerializeField] private DetectorController detectorController;
     [SerializeField] private WallsController wallsController;
-    [SerializeField] private float MoveSpeed;
+    [SerializeField] private ShopManager shopManager;
+    [SerializeField] public float MoveSpeed;
     [SerializeField] private float JumpForce;
-    private bool DJump;
+    [SerializeField] private bool DJump;
     private float Dirx;
     private Rigidbody2D Rigidbody2D;
     private BoxCollider2D BoxCollider2D;
@@ -29,6 +28,7 @@ public class Movement : MonoBehaviour
         EventBus.Movements += Accelerate;
         EventBus.Movements += Crawling;
         EventBus.Movements += DoubleJump;
+        EventBus.Movements += ScaleChange;
 
     }
 
@@ -40,6 +40,18 @@ public class Movement : MonoBehaviour
         EventBus.Movements -= Accelerate;
         EventBus.Movements -= Crawling;
         EventBus.Movements -= DoubleJump;
+        EventBus.Movements -= ScaleChange;
+    }
+    private void Update()
+    {
+        MoveHorizontal();
+        Jump();
+        DoubleJump();
+        Crawling();
+        Accelerate();
+        SlidingWalls();
+        ScaleChange();
+
     }
 
 
@@ -61,12 +73,18 @@ public class Movement : MonoBehaviour
                 Rigidbody2D.AddForce(Vector2.up * JumpForce);
                 DJump = true;
             }
-            if (Input.GetButtonDown("Jump") & Input.GetKey(KeyCode.LeftControl))
+            if (Input.GetButtonDown("Jump") & Input.GetKey(KeyCode.LeftControl) & !DJump)
             {
                 Rigidbody2D.AddForce(Vector2.up * JumpForce * 0.5f);
 
             }
         }
+        //if (DJump & Input.GetButtonDown("Jump") & !detectorController.IsFlag)
+        //{
+        //    Rigidbody2D.velocity = new Vector2(Rigidbody2D.velocity.x, 0f);
+        //    Rigidbody2D.AddForce(Vector2.up * JumpForce);
+        //    DJump = false;
+        //}
     } // Прыжок
 
     private void DoubleJump()
@@ -91,14 +109,14 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftControl))
         {
-            transform.localScale = new Vector2(1f, 0.5f);
-            Rigidbody2D.velocity = new Vector2(Dirx * MoveSpeed * 0.5f, Rigidbody2D.velocity.y);
-            BoxCollider2D.size = new Vector2(1f, .5f);
+            transform.localScale = new Vector2(shopManager.xSize* .5f,shopManager.ySize * .5f);
+            Rigidbody2D.velocity = new Vector2(Dirx * MoveSpeed * .5f, Rigidbody2D.velocity.y);
+            BoxCollider2D.size = new Vector2(shopManager.xSize,shopManager.ySize * .5f);
         }
         else
         {
-            BoxCollider2D.size = new Vector2(1f, 1f);
-            transform.localScale = new Vector2(1f, 1f);
+            BoxCollider2D.size = new Vector2(shopManager.xSize, shopManager.ySize);
+            transform.localScale = new Vector2(shopManager.xSize, shopManager.ySize);
         }
     } // Ползание
 
@@ -109,5 +127,11 @@ public class Movement : MonoBehaviour
             Rigidbody2D.velocity = new Vector2(Dirx * MoveSpeed * 2, Rigidbody2D.velocity.y);
         }
     } // Ускорение
-
+    private void ScaleChange()
+    {
+        if (!Input.GetKey(KeyCode.LeftControl))
+        {
+            transform.localScale = new Vector2(shopManager.xSize, shopManager.ySize);
+        }
+    }
 }

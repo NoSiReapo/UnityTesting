@@ -10,23 +10,21 @@ public class SceneChanger : MonoBehaviour
         firstScene = true;
     }
 
-    private void SelectName()
-    {
-       if (!firstScene)
-        {
-            sceneIndex = 0;
-            firstScene = true;
-        }
-        else
-        {
-            sceneIndex = 1;
-            firstScene = false;
-        }
-    }
     public void ChangeScene(int sceneIndex)
 	{
         if (Input.GetKeyDown(KeyCode.C))
         {
+            if (!firstScene)
+            {
+                sceneIndex = 0;
+                firstScene = true;
+            }
+            else
+            {
+                sceneIndex = 1;
+                firstScene = false;
+            } 
+
             SceneManager.LoadScene(sceneIndex);
         }		
 	}

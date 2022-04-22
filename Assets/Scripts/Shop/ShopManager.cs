@@ -7,7 +7,6 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private GameObject ShopObject;
     [SerializeField] private TMP_Text ButtonText;
     private bool IsShop;
-    private Button ShopButton;
     public float xSize = 1f;
     public float ySize = 1f;
 

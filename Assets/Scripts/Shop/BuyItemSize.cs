@@ -41,6 +41,14 @@ public class BuyItemSize : MonoBehaviour
             shopManager.xSize += 2f;
             shopManager.ySize += 2f;
         }
+        else if (Money.money < price && !isBought)
+        {
+            Debug.Log("Not enough money");
+        }
+        else if (isBought)
+        {
+            Debug.Log("Item is already bought");
+        }
     }
 
 }

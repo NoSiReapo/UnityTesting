@@ -4,13 +4,12 @@ using UnityEngine.UI;
 
 public class BuyItemSpeed : MonoBehaviour
 {
-    [SerializeField] private bool isBought;
     [SerializeField] private TMP_Text priceText;
     [SerializeField] private float price;
     [SerializeField] private Button itemButton;
-    public Movement Movement;
+    [SerializeField] private Movement Movement;
     public Money Money;
-
+    private bool isBought;
 
     private void Start()
     {
@@ -41,6 +40,14 @@ public class BuyItemSpeed : MonoBehaviour
             isBought = true;
             Movement.MoveSpeed += 3;
         }
+        else if (Money.money < price && !isBought)
+        {
+            Debug.Log("Not enough money");
+        }
+        else if (isBought)
+        {
+            Debug.Log("Item is already bought");
+        }
     }
-
 }
+

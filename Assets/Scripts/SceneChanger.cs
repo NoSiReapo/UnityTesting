@@ -3,29 +3,24 @@ using UnityEngine.SceneManagement;
 
 public class SceneChanger : MonoBehaviour
 {
-	private bool firstScene;
-    private int sceneIndex;
-    private void Start()
+    private void Update()
     {
-        firstScene = true;
+        ChangeScene();
     }
 
-    public void ChangeScene(int sceneIndex)
+    public void ChangeScene()
 	{
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.H))
         {
-            if (!firstScene)
+            if (SceneManager.GetActiveScene().name == "MainScene")
             {
-                sceneIndex = 0;
-                firstScene = true;
+                SceneTransition.SwitchToScene("Shop");
             }
-            else
+            else if (SceneManager.GetActiveScene().name == "Shop")
             {
-                sceneIndex = 1;
-                firstScene = false;
+                SceneTransition.SwitchToScene("MainScene");
             } 
 
-            SceneManager.LoadScene(sceneIndex);
         }		
 	}
 

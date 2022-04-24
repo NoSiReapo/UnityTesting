@@ -9,7 +9,7 @@ public class BuyItemSize : MonoBehaviour
     [SerializeField] private float price;
     [SerializeField] private Button itemButton;
     public Money Money;
-    public ShopManager shopManager;
+    public Movement movement;
 
     private void Start()
     {
@@ -38,8 +38,8 @@ public class BuyItemSize : MonoBehaviour
             Money.money -= price;
             priceText.text = "SOLD";
             isBought = true;
-            shopManager.xSize += 2f;
-            shopManager.ySize += 2f;
+            movement.xSize += 2f;
+            movement.ySize += 2f;
         }
         else if (Money.money < price && !isBought)
         {

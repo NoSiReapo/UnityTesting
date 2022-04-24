@@ -4,7 +4,6 @@ public class Movement : MonoBehaviour
 {
     [SerializeField] private DetectorController detectorController;
     [SerializeField] private WallsController wallsController;
-    [SerializeField] private ShopManager shopManager;
     [SerializeField] public float MoveSpeed;
     [SerializeField] private float JumpForce;
     [SerializeField] private bool DJump;
@@ -12,6 +11,8 @@ public class Movement : MonoBehaviour
     private Rigidbody2D Rigidbody2D;
     private BoxCollider2D BoxCollider2D;
     public GameObject Player;
+    public float xSize = 1f;
+    public float ySize = 1f;
 
     private void Start()
     {
@@ -109,14 +110,14 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftControl))
         {
-            transform.localScale = new Vector2(shopManager.xSize* .5f,shopManager.ySize * .5f);
+            transform.localScale = new Vector2(xSize, ySize * .5f);
             Rigidbody2D.velocity = new Vector2(Dirx * MoveSpeed * .5f, Rigidbody2D.velocity.y);
-            BoxCollider2D.size = new Vector2(shopManager.xSize,shopManager.ySize * .5f);
+            BoxCollider2D.size = new Vector2(xSize, ySize * .5f);
         }
         else
         {
-            BoxCollider2D.size = new Vector2(shopManager.xSize, shopManager.ySize);
-            transform.localScale = new Vector2(shopManager.xSize, shopManager.ySize);
+            BoxCollider2D.size = new Vector2(xSize, ySize);
+            transform.localScale = new Vector2(xSize, ySize);
         }
     } // Ползание
 
@@ -131,7 +132,7 @@ public class Movement : MonoBehaviour
     {
         if (!Input.GetKey(KeyCode.LeftControl))
         {
-            transform.localScale = new Vector2(shopManager.xSize, shopManager.ySize);
+            transform.localScale = new Vector2(xSize, ySize);
         }
     }
 }

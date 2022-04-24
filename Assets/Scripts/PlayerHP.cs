@@ -18,11 +18,11 @@ public class PlayerHP : MonoBehaviour
 
     private void Update()
     {
-        FountainMessage();
-        HpLoose();
-        HpGain();
-        HpWarning();
-        PlayerDestroy();
+        //FountainMessage();
+        //HpLoose();
+        //HpGain();
+        //HpWarning();
+        //PlayerDestroy();
     }
 
     private void FountainMessage() //Сообщение при подхождению к фонтану
